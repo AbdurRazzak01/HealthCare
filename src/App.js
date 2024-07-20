@@ -1,43 +1,52 @@
 import React, { useState, useEffect } from 'react';
-import Web3 from 'web3';
+import { healthcareContract, web3 } from './web.js'; // Import the updated web3 instance
 import './App.css';
 import './styles.css';
 import Notification from './Notification';
-import { healthcareContract, provider } from './web.js'; // Ensure this file is correctly configured
 
 function App() {
-  const [web3, setWeb3] = useState(null);
   const [accountBalance, setAccountBalance] = useState('');
   const [depositAmount, setDepositAmount] = useState('');
   const [withdrawAmount, setWithdrawAmount] = useState('');
   const [clinicAddress, setClinicAddress] = useState('');
   const [paymentAmount, setPaymentAmount] = useState('');
   const [notification, setNotification] = useState({ show: false, message: '' });
-
-  // Use this wallet address
-  const defaultWalletAddress = '0x3016DBeE1F9580638E2691546e8D2df1535B03be';
+  const [currentAccount, setCurrentAccount] = useState('');
 
   useEffect(() => {
-    if (window.ethereum) {
-      const web3 = new Web3(window.ethereum);
-      window.ethereum.request({ method: 'eth_requestAccounts' })
-        .then((accounts) => {
-          setWeb3(web3);
-          updateBalance(); // Update balance once connected
-        })
-        .catch((error) => {
-          console.error('Error connecting wallet:', error);
-          showNotification('Error connecting wallet');
+    const initializeWeb3 = async () => {
+      if (window.ethereum) {
+        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+        setCurrentAccount(accounts[0]);
+
+        const balance = await healthcareContract.methods.balances(accounts[0]).call();
+        setAccountBalance(web3.utils.fromWei(balance, 'ether'));
+
+        window.ethereum.on('accountsChanged', async (accounts) => {
+          setCurrentAccount(accounts[0]);
+          const balance = await healthcareContract.methods.balances(accounts[0]).call();
+          setAccountBalance(web3.utils.fromWei(balance, 'ether'));
         });
-    } else {
-      console.log('Non-Ethereum browser detected. You should consider trying MetaMask!');
-    }
+
+        window.ethereum.on('chainChanged', async () => {
+          // Handle network change if needed
+          const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+          setCurrentAccount(accounts[0]);
+          const balance = await healthcareContract.methods.balances(accounts[0]).call();
+          setAccountBalance(web3.utils.fromWei(balance, 'ether'));
+        });
+      } else {
+        console.log('Non-Ethereum browser detected. You should consider trying MetaMask!');
+      }
+    };
+
+    initializeWeb3();
   }, []);
 
   const updateBalance = async () => {
-    if (web3) {
+    if (web3 && currentAccount) {
       try {
-        const balance = await healthcareContract.methods.balances(defaultWalletAddress).call();
+        const balance = await healthcareContract.methods.balances(currentAccount).call();
         setAccountBalance(web3.utils.fromWei(balance, 'ether'));
       } catch (error) {
         console.error('Error fetching balance:', error);
@@ -46,10 +55,10 @@ function App() {
   };
 
   const handleDeposit = async () => {
-    if (depositAmount > 0 && web3) {
+    if (depositAmount > 0 && web3 && currentAccount) {
       try {
         const amountToDeposit = web3.utils.toWei(depositAmount, 'ether');
-        await healthcareContract.methods.deposit().send({ from: defaultWalletAddress, value: amountToDeposit });
+        await healthcareContract.methods.deposit().send({ from: currentAccount, value: amountToDeposit });
         setDepositAmount('');
         showNotification('Deposit Successful');
         updateBalance();
@@ -63,10 +72,10 @@ function App() {
   };
 
   const handleWithdraw = async () => {
-    if (withdrawAmount > 0 && web3) {
+    if (withdrawAmount > 0 && web3 && currentAccount) {
       try {
         const amountToWithdraw = web3.utils.toWei(withdrawAmount, 'ether');
-        await healthcareContract.methods.withdraw(amountToWithdraw).send({ from: defaultWalletAddress });
+        await healthcareContract.methods.withdraw(amountToWithdraw).send({ from: currentAccount });
         setWithdrawAmount('');
         showNotification('Withdrawal Successful');
         updateBalance();
@@ -80,10 +89,10 @@ function App() {
   };
 
   const handlePayment = async () => {
-    if (paymentAmount > 0 && clinicAddress && web3) {
+    if (paymentAmount > 0 && clinicAddress && web3 && currentAccount) {
       try {
         const amountToPay = web3.utils.toWei(paymentAmount, 'ether');
-        await healthcareContract.methods.payForHealthcare(clinicAddress, amountToPay).send({ from: defaultWalletAddress });
+        await healthcareContract.methods.payForHealthcare(clinicAddress, amountToPay).send({ from: currentAccount });
         setPaymentAmount('');
         setClinicAddress('');
         showNotification('Payment Successful');
@@ -98,9 +107,9 @@ function App() {
   };
 
   const handleClaimPayment = async () => {
-    if (web3) {
+    if (web3 && currentAccount) {
       try {
-        await healthcareContract.methods.claimPayment().send({ from: defaultWalletAddress });
+        await healthcareContract.methods.claimPayment().send({ from: currentAccount });
         showNotification('Claim Successful');
         updateBalance();
       } catch (error) {
@@ -137,9 +146,8 @@ function App() {
 
           <div className="action-card">
             <h3>Account Details</h3>
-            <p>Your Wallet Address: {defaultWalletAddress}</p>
+            <p>Your Wallet Address: {currentAccount}</p>
             <p>Your Account Balance: {accountBalance} ETH</p>
-            <button onClick={() => handleDeposit()}>Connect Wallet</button>
           </div>
         </section>
 
