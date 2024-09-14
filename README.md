@@ -1,5 +1,5 @@
-# Getting Started with Create React App
 
+Web3 Healthcare System is an universal health savings that helps people to get extra money when they need to pay healthcare bills and also makes them able to earn money while they are saving! 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
