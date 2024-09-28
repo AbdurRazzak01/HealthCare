@@ -1,10 +1,29 @@
+:root {
+  --primary-bg-color: #282c34;
+  --primary-text-color: white;
+  --link-color: #61dafb;
+  --link-hover-color: #21a1f1;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+}
+
 .App {
   text-align: center;
 }
 
 .App-logo {
-  height: 40vmin;
+  height: 40rem; /* Changed from vmin to rem for more predictable scaling */
   pointer-events: none;
+  will-change: transform; /* Optimizes animation performance */
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -14,18 +33,26 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: var(--primary-bg-color);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  font-size: calc(10px + 2rem); /* Use rem instead of vmin for consistent scaling */
+  color: var(--primary-text-color);
+  padding: 20px;
+  text-align: center;
 }
 
 .App-link {
-  color: #61dafb;
+  color: var(--link-color);
+  text-decoration: none;
+  transition: color 0.3s ease-in-out;
+}
+
+.App-link:hover {
+  color: var(--link-hover-color);
 }
 
 @keyframes App-logo-spin {
