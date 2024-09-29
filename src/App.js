@@ -145,7 +145,7 @@ function App() {
           </div>
 
           <div className="action-card">
-            <h3>Account Details</h3>
+            <h3>Your Account Details</h3>
             <p>Your Wallet Address: {currentAccount}</p>
             <p>Your Account Balance: {accountBalance} ETH</p>
           </div>
@@ -192,7 +192,7 @@ function App() {
           </div>
 
           <div className="action-card">
-            <h2>Claim Payment</h2>
+            <h2>Claim Your Payment</h2>
             <button onClick={handleClaimPayment}>Claim</button>
           </div>
         </section>
@@ -203,7 +203,7 @@ function App() {
       )}
 
       <footer className="footer">
-        <p>&copy; 2024 Healthcare DApp. All rights reserved.</p>
+        <p>&copy; 2024 DotLife Protocol. All rights reserved.</p>
       </footer>
     </div>
   );
