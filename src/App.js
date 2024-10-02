@@ -141,11 +141,11 @@ function App() {
       <main className="main-content">
         <section className="left-section">
           <div className="action-card">
-            <h2>Healthcare DApp</h2>
+            <h2>DotLife Platform</h2>
           </div>
 
           <div className="action-card">
-            <h3>Your Account Details</h3>
+            <h3>All About Your Wallet!</h3>
             <p>Your Wallet Address: {currentAccount}</p>
             <p>Your Account Balance: {accountBalance} ETH</p>
           </div>
@@ -158,7 +158,7 @@ function App() {
               type="number"
               value={depositAmount}
               onChange={(e) => setDepositAmount(e.target.value)}
-              placeholder="Enter amount to deposit"
+              placeholder="Your Deposit Amount"
             />
             <button onClick={handleDeposit}>Deposit</button>
           </div>
@@ -169,7 +169,7 @@ function App() {
               type="number"
               value={withdrawAmount}
               onChange={(e) => setWithdrawAmount(e.target.value)}
-              placeholder="Enter amount to withdraw"
+              placeholder="Your Withdrawal Amount"
             />
             <button onClick={handleWithdraw}>Withdraw</button>
           </div>
@@ -180,20 +180,20 @@ function App() {
               type="text"
               value={clinicAddress}
               onChange={(e) => setClinicAddress(e.target.value)}
-              placeholder="Enter clinic address"
+              placeholder="Clinics Near You!"
             />
             <input
               type="number"
               value={paymentAmount}
               onChange={(e) => setPaymentAmount(e.target.value)}
-              placeholder="Enter amount to pay"
+              placeholder="Payable Amount"
             />
             <button onClick={handlePayment}>Pay</button>
           </div>
 
           <div className="action-card">
-            <h2>Claim Your Payment</h2>
-            <button onClick={handleClaimPayment}>Claim</button>
+            <h2>Claim Your Payment Now! </h2>
+            <button onClick={handleClaimPayment}>Claim Payment</button>
           </div>
         </section>
       </main>
