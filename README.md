@@ -10,17 +10,7 @@ Frontend: Built using React, offering an interactive and user-friendly interface
 Smart Contracts: Developed in Solidity, the smart contracts handle user funds, reward distribution, and transaction validation.
 Web3 Integration: The platform leverages web3.js to interact with the Ethereum blockchain, allowing for decentralized transactions and wallet connections.
 Decentralized Storage: Critical data is stored on-chain for added security, while healthcare records or metadata could be stored using IPFS (future scope).
-Project Structure
-php
-Copy code
-HealthCare/
-│
-├── src/                      # React app source files
-├── healthcare-smart-contracts/ # Solidity contracts
-├── public/                   # Public files (HTML, assets)
-├── package.json              # Node.js dependencies and scripts
-├── .gitignore                # Ignored files
-└── README.md                 # Project documentation
+
 Smart Contract Details
 The core smart contract is written in Solidity, covering:
 
