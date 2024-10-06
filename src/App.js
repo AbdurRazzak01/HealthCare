@@ -131,9 +131,9 @@ function App() {
   return (
     <div className="app-container">
       <header className="header">
-        <div className="company-name">DitLife Your Healthcare Solution!</div>
+        <div className="company-name">DotLife Your Healthcare Solution!</div>
         <nav className="navigation">
-          <a href="#">Home</a>
+          <a href="#">Home Page</a>
           <a href="#">Learn More</a>
         </nav>
       </header>
@@ -147,7 +147,7 @@ function App() {
           <div className="action-card">
             <h3>All About Your Wallet!</h3>
             <p>Your Wallet Address: {currentAccount}</p>
-            <p>Your Account Balance: {accountBalance} ETH</p>
+            <p>Your Wallet Balance: {accountBalance} ETH</p>
           </div>
         </section>
 
@@ -203,7 +203,7 @@ function App() {
       )}
 
       <footer className="footer">
-        <p>&copy; 2024 DotLife Protocol. All rights reserved.</p>
+        <p>&copy; 2024 DotLife Protocol. All rights are reserved.</p>
       </footer>
     </div>
   );
