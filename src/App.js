@@ -131,7 +131,7 @@ function App() {
   return (
     <div className="app-container">
       <header className="header">
-        <div className="company-name">Healthcare DApp</div>
+        <div className="company-name">DitLife Your Healthcare Solution!</div>
         <nav className="navigation">
           <a href="#">Home</a>
           <a href="#">Learn More</a>
